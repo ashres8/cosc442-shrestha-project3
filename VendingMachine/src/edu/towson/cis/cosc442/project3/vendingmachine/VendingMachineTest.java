@@ -46,6 +46,26 @@ public class VendingMachineTest {
 	
 	/**
 	 * Test method for {@link edu.towson.cis.cosc442.project3.vendingmachine.VendingMachine#addItem(edu.towson.cis.cosc442.project3.vendingmachine.VendingMachineItem, java.lang.String)}.
+	 * Creates a new VendingMachineItem then gets the Item for the Checking if it exists in the
+	 * Vending Machine 
+	 * 
+	 */
+	@Test
+	public void testAddItem_With_Occupied() {
+		try{
+			VendingMachineItem vi1 = new VendingMachineItem("Chip", 5.00);
+			VendingMachineItem vi2 = new VendingMachineItem("Chip2", 5.00);
+			vm.addItem(vi1, VendingMachine.A_CODE);
+			vm.addItem(vi2, VendingMachine.A_CODE);
+			assertEquals(vm.getItem(VendingMachine.A_CODE), vi1);
+			assertEquals(vm.getItem(VendingMachine.A_CODE), vi2);
+	    } catch (VendingMachineException e) {
+	    	assertEquals(e.getMessage(), "Slot " + VendingMachine.A_CODE + " already occupied");
+	    }
+	}
+	
+	/**
+	 * Test method for {@link edu.towson.cis.cosc442.project3.vendingmachine.VendingMachine#addItem(edu.towson.cis.cosc442.project3.vendingmachine.VendingMachineItem, java.lang.String)}.
 	 * This tests if it is possible to add an Item to the VendingMachine even if the Code of the
 	 * Vending Machine doesn't exists
 	 */
@@ -68,8 +88,8 @@ public class VendingMachineTest {
 	@Test
 	public void testRemoveItem() {
 		VendingMachineItem vi1 = new VendingMachineItem("Chip", 5.00);
-		vm.addItem(vi1, VendingMachine.A_CODE);
-		assertEquals(vm.removeItem(VendingMachine.A_CODE), vi1);
+		vm.addItem(vi1, VendingMachine.B_CODE);
+		assertEquals(vm.removeItem(VendingMachine.B_CODE), vi1);
 	}
 	
 	/**
@@ -80,9 +100,9 @@ public class VendingMachineTest {
 	@Test
 	public void testRemoveItem_Without_Adding() {
 		try{
-			assertEquals(vm.removeItem(VendingMachine.A_CODE), null);
+			assertEquals(vm.removeItem(VendingMachine.C_CODE), null);
 	    } catch (VendingMachineException e) {
-	    	assertEquals(e.getMessage(), "Slot " + VendingMachine.A_CODE + " is empty -- cannot remove item");
+	    	assertEquals(e.getMessage(), "Slot " + VendingMachine.C_CODE + " is empty -- cannot remove item");
 	    }
 	}
 
@@ -131,9 +151,9 @@ public class VendingMachineTest {
 	@Test
 	public void testMakePurchase() {
 		VendingMachineItem vi1 = new VendingMachineItem("Chip", 5.00);
-		vm.addItem(vi1, VendingMachine.A_CODE);
+		vm.addItem(vi1, VendingMachine.D_CODE);
 		vm.insertMoney(6.00);
-		assertEquals(true, vm.makePurchase(VendingMachine.A_CODE));
+		assertEquals(true, vm.makePurchase(VendingMachine.D_CODE));
 	}
 	
 	/**
